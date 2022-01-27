@@ -1,4 +1,10 @@
-import java.util.*;
+/**
+ * Clase Controlador
+ * Programado por: Diego Morales Aquino y Daniel Morales 
+ * Fecha: 26/01/2022
+ */
+
+import java.text.DecimalFormat;
 public class Controlador implements Radio{
 
     private boolean encendido = false;
@@ -40,10 +46,10 @@ public class Controlador implements Radio{
  
         if(tipoSenal){ 
             emisorasGuardadas[numBoton] = emisoraAM_actual;
-            return "La emisora: "+emisoraAM_actual+" se a guardado en el boton: "+numBoton;
+            return "La emisora: "+emisoraAM_actual+" se a guardado en el boton: "+ (numBoton + 1);
         }else{
             emisorasGuardadas[numBoton] = emisoraFM_actual;
-            return "La emisora: "+emisoraFM_actual+" se a guardado en el boton: "+numBoton;
+            return "La emisora: "+emisoraFM_actual+" se a guardado en el boton: "+ (numBoton + 1);
         }
     
     }
@@ -79,9 +85,10 @@ public class Controlador implements Radio{
             Boolean tipoSenalEmisora = getTipoSenalEmisora(emisora);
             String respuesta = "";
         
-
             if(tipoSenalEmisora == null) return "Emisora no válida.";
-            else{
+            else if (tipoSenalEmisora != tipoSenal){
+
+                //cambiar tipo de senal
                 String senal = cambiarSenal(tipoSenalEmisora);
                 respuesta += "Senal cambiada a " + senal + "\n"; 
             }
@@ -103,28 +110,37 @@ public class Controlador implements Radio{
         return opcion ? "AM" : "FM";
     }
 
+    /**
+     * Retorna el tipo de senal actual.
+     * @return true:AM, false:FM
+     */
     @Override
     public boolean getTipoSenal() {
-        
         return tipoSenal;
     }
 
+    /**
+     * Avanza la frecuencia de la emisora actual.  
+     */
     @Override
     public void subirEmisora() {
         if (tipoSenal){
             //AM
-            emisoraAM_actual = emisoraAM_actual +10;
+            emisoraAM_actual = emisoraAM_actual + 10;
             if (emisoraAM_actual>1610)
                 emisoraAM_actual = 530;
         }else{
             //FM
-            emisoraFM_actual = emisoraFM_actual+0.2f;
-            if (emisoraFM_actual>107.9)
+            DecimalFormat df = new DecimalFormat("###.#");
+            emisoraFM_actual = Float.parseFloat(df.format(emisoraFM_actual + 0.2f));
+            if (emisoraFM_actual > 107.9)
                 emisoraFM_actual = 87.9f;             
         }
-        
-    }
 
+    }
+    /**
+     * Retrocede la frecuencia de la emisora actual.
+     */
     @Override
     public void bajarEmisora() {
         if (tipoSenal){
@@ -134,8 +150,9 @@ public class Controlador implements Radio{
                 emisoraAM_actual = 1610;
         }else{
             //FM
-            emisoraFM_actual = emisoraFM_actual-0.2f;
-            if (emisoraFM_actual<87.9)
+            DecimalFormat df = new DecimalFormat("###.#");
+            emisoraFM_actual = Float.parseFloat(df.format(emisoraFM_actual - 0.2f));
+            if (emisoraFM_actual < 87.9)
                 emisoraFM_actual = 107.9f;             
         }
         
@@ -143,10 +160,10 @@ public class Controlador implements Radio{
 
     @Override
     public float getEmisoraActual() {
-        if(tipoSenal){
+        if(tipoSenal){ //AM
             return emisoraAM_actual;
-        }else{
-            return emisoraAM_actual;
+        }else{ //FM
+            return emisoraFM_actual;
         }
         
     }

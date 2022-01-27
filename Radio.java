@@ -1,3 +1,9 @@
+/**
+ * Interfaz Radio
+ * Programado por: Diego Morales Aquino y Daniel Morales 
+ * Fecha: 26/01/2022
+ */
+
 public interface Radio {
     
     public void encenderApagar();
