@@ -39,17 +39,18 @@ public class Controlador implements Radio{
     
     /**
      * Método que permite guardar la emisora actual en el botón seleccionado por el usuario.
+     * @param numBoton Botones del 1 al 12
      * @return Mensaje indicando que la emisora se a guardado en un botón
      */    
     @Override
     public String guardarEmisoraActual(int numBoton) {
  
         if(tipoSenal){ 
-            emisorasGuardadas[numBoton] = emisoraAM_actual;
-            return "La emisora: "+emisoraAM_actual+" se a guardado en el boton: "+ (numBoton + 1);
+            emisorasGuardadas[numBoton - 1] = emisoraAM_actual;
+            return "La emisora: "+emisoraAM_actual+" se a guardado en el boton: "+ (numBoton);
         }else{
-            emisorasGuardadas[numBoton] = emisoraFM_actual;
-            return "La emisora: "+emisoraFM_actual+" se a guardado en el boton: "+ (numBoton + 1);
+            emisorasGuardadas[numBoton - 1] = emisoraFM_actual;
+            return "La emisora: "+emisoraFM_actual+" se a guardado en el boton: "+ (numBoton);
         }
     
     }

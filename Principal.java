@@ -4,7 +4,6 @@
  * Fecha: 26/01/2022
  */
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -133,7 +132,7 @@ public class Principal{
                     for(int i = 1; i <= opcionesValidas.length; i++) opcionesValidas[i - 1] = i;
 
                     int numBoton = getIntValido(sc, "Ingresa el boton en donde se almacenara la emisora(1-12):", opcionesValidas);
-                    System.out.println(controlador.guardarEmisoraActual(numBoton - 1));
+                    System.out.println(controlador.guardarEmisoraActual(numBoton));
                     break;
                 }
                 case 6:{ //reproducir emisora guardada
