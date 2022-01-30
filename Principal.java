@@ -48,16 +48,22 @@ public class Principal{
 
     }
 
+    /**
+     * Metodo principal del programa
+     * @param args
+     */
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        Controlador controlador = new Controlador();
+        var controlador = new RadioController_ErickGuerra();
         boolean terminar = false;
 
         System.out.println("Simulador de radio 1.0\n");
 
         while(!terminar){
 
+            //imprimir estado
+            if(controlador.comprobarEncendida()) System.out.println(controlador.toString());
 
             String menu = String.format("""
             \nSelecciona una opcion: 
@@ -147,11 +153,15 @@ public class Principal{
                     for(int i = 1; i <= opcionesValidas.length; i++) opcionesValidas[i - 1] = i;
                     
                     int numBoton = getIntValido(sc, "Ingresar el boton a presionar(1-12):", opcionesValidas);
-                    System.out.println(controlador.seleccionarEmisoraGuardada(numBoton - 1));
+                    String emisora = controlador.seleccionarEmisoraGuardada(numBoton);
+                    
+                    if(emisora != null) System.out.println("Reproduciendo emisora: " + emisora);
+                    else System.out.println("No se tiene almacenada una emisora en la casilla " + numBoton);
                     break;
                 }
                 case 7:{ //salir
                     terminar = true;
+                    System.out.println("Terminando simulacion, hasta pronto.");
                     break;
                 }
 

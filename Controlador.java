@@ -55,6 +55,11 @@ public class Controlador implements Radio{
     
     }
 
+    /**
+     * Se encarga de verificar si el numero de boton proporcionado es valido.
+     * @param numBoton numero del boton
+     * @return boolean
+     */
     private boolean validarBoton(int numBoton){
         return (numBoton >= 0 && numBoton < emisorasGuardadas.length && emisorasGuardadas[numBoton] != null);
     }
@@ -79,24 +84,28 @@ public class Controlador implements Radio{
      */
     @Override
     public String seleccionarEmisoraGuardada(int numBoton) {
+
+        numBoton -= 1;
         
         if(validarBoton(numBoton)){
             
             float emisora = emisorasGuardadas[numBoton];
             Boolean tipoSenalEmisora = getTipoSenalEmisora(emisora);
-            String respuesta = "";
         
-            if(tipoSenalEmisora == null) return "Emisora no válida.";
+            if(tipoSenalEmisora == null) return null;
             else if (tipoSenalEmisora != tipoSenal){
 
                 //cambiar tipo de senal
-                String senal = cambiarSenal(tipoSenalEmisora);
-                respuesta += "Senal cambiada a " + senal + "\n"; 
+                cambiarSenal(tipoSenalEmisora); 
             }
 
-            return respuesta += "Reproduciendo emisora " + emisorasGuardadas[numBoton];
+            //cambiando emisora
+            if(tipoSenal) emisoraAM_actual = emisorasGuardadas[numBoton];
+            else emisoraFM_actual = emisorasGuardadas[numBoton];
+
+            return String.valueOf(emisorasGuardadas[numBoton]);
         }else{
-            return "No se tiene almacenada una emisora en la casilla " + numBoton;
+            return null;
         }
     }
 
@@ -159,6 +168,9 @@ public class Controlador implements Radio{
         
     }
 
+    /** Retorna la emisora actual.
+     *  @return Float
+     */
     @Override
     public float getEmisoraActual() {
         if(tipoSenal){ //AM
@@ -167,6 +179,18 @@ public class Controlador implements Radio{
             return emisoraFM_actual;
         }
         
+    }
+
+    /** Retorna la informacion del estado del radio.
+     * @return String. 
+     */
+    @Override
+    public String toString(){
+        return String.format("""
+        \nEstado:
+           - Senal: %s
+           - Emisora: %s
+        """, tipoSenal ? "AM" : "FM", tipoSenal ? emisoraAM_actual : emisoraFM_actual);
     }
 
 
