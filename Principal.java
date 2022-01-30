@@ -27,9 +27,7 @@ public class Principal{
         }
 
         while (true) {
-
             try {
-
                 System.out.println(mensaje);
                 Integer value = sc.nextInt();
                 sc.nextLine();
@@ -43,7 +41,6 @@ public class Principal{
             }
 
             System.out.println("Porfavor, ingresa una valor valido.");
-
         }
 
     }
@@ -55,7 +52,8 @@ public class Principal{
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        var controlador = new RadioController_ErickGuerra();
+        //var controlador = new RadioController_ErickGuerra();
+        var controlador = new Controlador();
         boolean terminar = false;
 
         System.out.println("Simulador de radio 1.0\n");
