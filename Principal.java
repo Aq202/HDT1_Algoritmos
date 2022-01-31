@@ -53,6 +53,7 @@ public class Principal{
 
         Scanner sc = new Scanner(System.in);
         //var controlador = new RadioController_ErickGuerra();
+        //var controlador = new Controlador_PabloZamora();
         var controlador = new Controlador();
         boolean terminar = false;
 
